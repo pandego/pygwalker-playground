@@ -1,0 +1,20 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pygwalker_ui_instance
+    env_file:
+      - .default_env
+    volumes:
+      - /data:/app/data
+      - /data/logs:/app/logs
+    restart: always
+    ports:
+      - 8501:8501
+
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8501/" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
